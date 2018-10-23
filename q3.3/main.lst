@@ -1,0 +1,131 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; r0 - r7 -> General Purpose Registers
+    2 00000000         ; r8 -> current max value
+    3 00000000         ; r9 -> address of next byte
+    4 00000000                 THUMB
+    5 00000000                 AREA             DATA, ALIGN=4
+    6 00000000                 EXPORT           M [DATA,SIZE=4]
+    7 00000000 00 00 00 
+              00       M       SPACE            4
+    8 00000004         
+    9 00000004                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   10 00000000                 EXPORT           Start
+   11 00000000         
+   12 00000000         
+   13 00000000         Start
+   14 00000000         
+   15 00000000 05 02 9C 
+              64 9B 00 a       DCB              5, 2, -100, 100, -101, 0
+   16 00000006 00      max     DCB              0
+   17 00000007         
+   18 00000007 00 F2AF 
+              090C             ADR              r9, a
+   19 0000000C F999 8000       LDRSB            r8, [r9]
+   20 00000010 E000            B                maximum
+   21 00000012         stop
+   22 00000012 E7FE            B                .
+   23 00000014         
+   24 00000014         maximum
+   25 00000014 F919 0B01       LDRSB            r0, [r9], #1
+   26 00000018 2800            CMP              r0, #0
+   27 0000001A D0FA            BEQ              stop
+   28 0000001C         
+   29 0000001C 4580            CMP              r8, r0
+   30 0000001E BF48 4680       MOVMI            r8, r0
+   31 00000022 E7F7            B                maximum
+   32 00000024         
+   33 00000024         
+   34 00000024                 ALIGN
+   35 00000024                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\main.d -o.\main.o -I.\RTE\_SimpleProject -IC:\Keil_v5\ARM\PACK\A
+RM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Dev
+ice\Include\TM4C123 --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION 
+SETA 526" --predefine="_RTE_ SETA 1" --predefine="TM4C123GH6PM SETA 1" --list=.
+\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 5 in file main.s
+   Uses
+      None
+Comment: DATA unused
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 7 in file main.s
+   Uses
+      At line 6 in file main.s
+Comment: M used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 9 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 13 in file main.s
+   Uses
+      At line 10 in file main.s
+Comment: Start used once
+a 00000000
+
+Symbol: a
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: a used once
+max 00000006
+
+Symbol: max
+   Definitions
+      At line 16 in file main.s
+   Uses
+      None
+Comment: max unused
+maximum 00000014
+
+Symbol: maximum
+   Definitions
+      At line 24 in file main.s
+   Uses
+      At line 20 in file main.s
+      At line 31 in file main.s
+
+stop 00000012
+
+Symbol: stop
+   Definitions
+      At line 21 in file main.s
+   Uses
+      At line 27 in file main.s
+Comment: stop used once
+6 symbols
+342 symbols in table
