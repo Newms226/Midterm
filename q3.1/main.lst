@@ -1,0 +1,123 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; main.s
+    2 00000000         ; Runs on any Cortex M processor
+    3 00000000         ; A very simple first project implementing a random numb
+                       er generator
+    4 00000000         ; Daniel Valvano
+    5 00000000         ; May 12, 2015
+    6 00000000         
+    7 00000000         ;  This example accompanies the book
+    8 00000000         ;  "Embedded Systems: Introduction to Arm Cortex M Micro
+                       controllers",
+    9 00000000         ;  ISBN: 978-1469998749, Jonathan Valvano, copyright (c)
+                        2015
+   10 00000000         ;  Section 3.3.10, Program 3.12
+   11 00000000         ;
+   12 00000000         ;Copyright 2015 by Jonathan W. Valvano, valvano@mail.ute
+                       xas.edu
+   13 00000000         ;   You may use, edit, run or distribute this file
+   14 00000000         ;   as long as the above copyright notice remains
+   15 00000000         ;THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHET
+                       HER EXPRESS, IMPLIED
+   16 00000000         ;OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WA
+                       RRANTIES OF
+   17 00000000         ;MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AP
+                       PLY TO THIS SOFTWARE.
+   18 00000000         ;VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR 
+                       SPECIAL, INCIDENTAL,
+   19 00000000         ;OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+   20 00000000         ;For more information about my classes, my research, and
+                        my books, see
+   21 00000000         ;http://users.ece.utexas.edu/~valvano/
+   22 00000000         
+   23 00000000         
+   24 00000000         ; we align 32 bit variables to 32-bits
+   25 00000000         ; we align op codes to 16 bits
+   26 00000000                 THUMB
+   27 00000000                 AREA             DATA, ALIGN=4
+   28 00000000                 EXPORT           M [DATA,SIZE=4]
+   29 00000000 00 00 00 
+              00       M       SPACE            4
+   30 00000004         
+   31 00000004                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   32 00000000                 EXPORT           Start
+   33 00000000         Start
+   34 00000000 F04F 0066       MOV              r0, #102
+   35 00000004 F04F 0566       MOV              r5, #0x66
+   36 00000008 F1A5 0741       SUB              r7, r5, #'A'
+   37 0000000C 2F19            CMP              r7, #'Z'-'A'
+   38 0000000E BF83 F1A5 
+              0761             SUBHI            r7, r5, #'a'
+   39 00000014 2F19            CMPHI            r7, #'z'-'a'
+   40 00000016 2048            MOVHI            r0, #'H'
+   41 00000018 2046            MOVLS            r0, #'F'
+   42 0000001A BF08 2054       MOVEQ            r0, #'T'
+   43 0000001E E7FE            B                .
+   44 00000020         
+   45 00000020                 ALIGN
+   46 00000020                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+ork --depend=.\main.d -o.\main.o -I.\RTE\_SimpleProject -IC:\Keil_v5\ARM\PACK\A
+RM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Dev
+ice\Include\TM4C123 --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION 
+SETA 526" --predefine="_RTE_ SETA 1" --predefine="TM4C123GH6PM SETA 1" --list=.
+\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 27 in file main.s
+   Uses
+      None
+Comment: DATA unused
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 29 in file main.s
+   Uses
+      At line 28 in file main.s
+Comment: M used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 31 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 33 in file main.s
+   Uses
+      At line 32 in file main.s
+Comment: Start used once
+2 symbols
+338 symbols in table

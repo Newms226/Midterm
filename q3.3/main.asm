@@ -23,25 +23,37 @@
 
 ; we align 32 bit variables to 32-bits
 ; we align op codes to 16 bits
-       THUMB
-       AREA    DATA, ALIGN=4 
-       EXPORT  M [DATA,SIZE=4]
-M      SPACE   4
-                 
-       AREA    |.text|, CODE, READONLY, ALIGN=2
-       EXPORT  Start
-Start 
-		MOV		r0, #102
-		MOV		r5, #0x66
-		SUB		r7, r5, #'A'
-		CMP		r7, #'Z'-'A'
-		SUBHI	r7, r5, #'a'
-		CMPHI	r7, #'z'-'a'
-		MOVHI	r0, #'H'
-		MOVLS	r0, #'F'
-		MOVEQ	r0, #'T'
-		B		.
-		
-       ALIGN      
-       END  
-           
+       .thumb
+       .data
+       .align 2
+M      .space 4
+
+       .text
+       .align 2
+       .global  main
+main:  .asmfunc
+       LDR R2,MAddr    ; R2 = &M, R2 points to M
+       MOV R0,#1       ; Initial seed
+       STR R0,[R2]     ; M=1
+loop   BL  Random
+       B   loop
+       .endasmfunc
+
+;------------Random------------
+; Return R0= random number
+; Linear congruential generator
+; from Numerical Recipes by Press et al.
+Random:  .asmfunc
+       LDR R2,MAddr ; R2 = &M, R2 points to M
+       LDR R0,[R2]  ; R0=M
+       LDR R1,k1
+       MUL R0,R0,R1 ; R0 = 1664525*M
+       LDR R1,k2
+       ADD R0,R1    ; 1664525*M+1013904223
+       STR R0,[R2]  ; store M
+       BX  LR
+       .endasmfunc
+MAddr  .field M,32   ; Address of M
+k1     .field 1664525,32
+k2     .field 1013904223,32
+       .end

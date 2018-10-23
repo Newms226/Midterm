@@ -30,18 +30,46 @@ M      SPACE   4
                  
        AREA    |.text|, CODE, READONLY, ALIGN=2
        EXPORT  Start
-Start 
-		MOV		r0, #102
-		MOV		r5, #0x66
-		SUB		r7, r5, #'A'
-		CMP		r7, #'Z'-'A'
-		SUBHI	r7, r5, #'a'
-		CMPHI	r7, #'z'-'a'
-		MOVHI	r0, #'H'
-		MOVLS	r0, #'F'
-		MOVEQ	r0, #'T'
+Start  
+		LDR		r1, =N256
+		LDR		r0, [r1]
+		MOVS	r0, r0, ASR #12
+		MOV		r2, #0x2
+		AND		r2, r0, r2
+		BL		printLetter
 		B		.
 		
+printLetter					
+	CMP		r2, #4			
+	BHI		Letter1	    
+	;ADR		r3, JumpTable	
+	;LDR		pc,[r3,r2,LSL #2] 
+	B		Letter4
+	
+JumpTable
+	DCD		Letter1
+	DCD		Letter2
+	DCD		Letter3
+	DCD		Letter4
+	DCD		Letter2
+Letter1
+	MOV		r0, #'a'			
+	BX         lr
+Letter2
+	MOV		r0, #&46			
+	BX         lr
+Letter3
+	MOV		r0, #&44		
+	BX         lr
+Letter4
+	MOV		r0, #&48		
+	BX         lr
+Letter5
+	MOV		r0, #&42		
+	BX         lr
+N256          DCD -256
+
+
        ALIGN      
        END  
            
