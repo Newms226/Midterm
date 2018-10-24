@@ -1,0 +1,125 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; r0 - r7 := General Purpose
+    2 00000000         ; r8 -> carry from word one -> 2
+    3 00000000         ; r9 := address of first
+    4 00000000         ; r10:= address of second word
+    5 00000000                 THUMB
+    6 00000000                 AREA             DATA, ALIGN=4
+    7 00000000                 EXPORT           M [DATA,SIZE=4]
+    8 00000000 00 00 00 
+              00       M       SPACE            4
+    9 00000004         
+   10 00000004                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   11 00000000                 EXPORT           Start
+   12 00000000         Start
+   13 00000000         
+   14 00000000 00F234E1 
+                       first   DCD              0x00F234E1
+   15 00000004 F9265EAC        DCD              0xF9265EAC
+   16 00000008 5729D472 
+                       second  DCD              0x5729D472
+   17 0000000C A5296101        DCD              0xA5296101
+   18 00000010         
+   19 00000010         begin
+   20 00000010 F2AF 0914       ADR              r9, first
+   21 00000014 F2AF 0A10       ADR              r10, second
+   22 00000018         
+   23 00000018         add_LSW
+   24 00000018 F109 0004       ADD              r0, r9, #4
+   25 0000001C 6800            LDR              r0, [r0]
+   26 0000001E         
+   27 0000001E         
+   28 0000001E         
+   29 0000001E 00 00           ALIGN
+   30 00000020                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\main.d -o.\main.o -I.\RTE\_SimpleProject -IC:\Keil_v5\ARM\PACK\A
+RM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Dev
+ice\Include\TM4C123 --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION 
+SETA 526" --predefine="_RTE_ SETA 1" --predefine="TM4C123GH6PM SETA 1" --list=.
+\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 6 in file main.s
+   Uses
+      None
+Comment: DATA unused
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 8 in file main.s
+   Uses
+      At line 7 in file main.s
+Comment: M used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 10 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 11 in file main.s
+Comment: Start used once
+add_LSW 00000018
+
+Symbol: add_LSW
+   Definitions
+      At line 23 in file main.s
+   Uses
+      None
+Comment: add_LSW unused
+begin 00000010
+
+Symbol: begin
+   Definitions
+      At line 19 in file main.s
+   Uses
+      None
+Comment: begin unused
+first 00000000
+
+Symbol: first
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 20 in file main.s
+Comment: first used once
+second 00000008
+
+Symbol: second
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: second used once
+6 symbols
+342 symbols in table
