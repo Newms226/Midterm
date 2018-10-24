@@ -1,7 +1,10 @@
 ; r0 - r7 := General Purpose
+; r6 -> calculated LSW
+; r7 -> calculated MSW
 ; r8 -> carry from word one -> 2
 ; r9 := address of first
 ; r10:= address of second word
+
        THUMB
        AREA    DATA, ALIGN=4 
        EXPORT  M [DATA,SIZE=4]
@@ -25,13 +28,12 @@ add_LSW
 		LDR		r1, [r0]
 		ADD		r0, r10, #4
 		LDR		r2, [r0]
-		ADDS	r0, r1, r2
-		BCS		carry_handler
-		
-carry_handler
-		
-		
-		
+		ADDS	r6, r1, r2
+		LDR		r1, [r9]
+		LDR		r2, [r10]
+		ADD		r7, r1, r2
+		ADDCSS	r7, r7, #1
+		B		.
        ALIGN      
        END  
            
