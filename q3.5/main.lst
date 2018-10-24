@@ -1,0 +1,141 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; r5 -> ASCII char
+    2 00000000         ; r6 -> counter
+    3 00000000                 THUMB
+    4 00000000                 AREA             DATA, ALIGN=4
+    5 00000000                 EXPORT           M [DATA,SIZE=4]
+    6 00000000 00 00 00 
+              00       M       SPACE            4
+    7 00000004         
+    8 00000004                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+    9 00000000                 EXPORT           Start
+   10 00000000         Start
+   11 00000000         ;                  0   A      F     Z     ]    a     b  
+                          z     |
+   12 00000000 31 41 46 
+              5A 5D 61 
+              62 5A 7C 
+              00       a       DCB              0x31, 0x41, 0x46, 0x5A, 0x5D, 0
+x61, 0x62, 0x5A, 0x7C,  0
+   13 0000000A         
+   14 0000000A F2AF 000C       ADR              r0, a
+   15 0000000E         loop
+   16 0000000E F810 5B01       LDRB             r5, [r0], #1
+   17 00000012 2D00            CMP              r5, #0
+   18 00000014 D00B            BEQ              stop
+   19 00000016 2D41            CMP              r5, #0x41   ; x < 0x41
+   20 00000018 DBF9            BLT              loop
+   21 0000001A 2D5B            CMP              r5, #0x5B
+   22 0000001C DB04            BLT              increment
+   23 0000001E 2D61            CMP              r5, #0x61
+   24 00000020 DBF5            BLT              loop
+   25 00000022 2D7B            CMP              r5, #0x7B
+   26 00000024 DB00            BLT              increment
+   27 00000026 E7F2            B                loop
+   28 00000028         
+   29 00000028         increment
+   30 00000028 F106 0601       ADD              r6, r6, #1
+   31 0000002C E7EF            B                loop
+   32 0000002E         
+   33 0000002E         ; 0x5B <= x < 0x61
+   34 0000002E         
+   35 0000002E         
+   36 0000002E         stop
+   37 0000002E E7FE            B                .
+   38 00000030                 ALIGN
+   39 00000030                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
+ork --depend=.\main.d -o.\main.o -I.\RTE\_SimpleProject -IC:\Keil_v5\ARM\PACK\A
+RM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Dev
+ice\Include\TM4C123 --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION 
+SETA 526" --predefine="_RTE_ SETA 1" --predefine="TM4C123GH6PM SETA 1" --list=.
+\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 4 in file main.s
+   Uses
+      None
+Comment: DATA unused
+M 00000000
+
+Symbol: M
+   Definitions
+      At line 6 in file main.s
+   Uses
+      At line 5 in file main.s
+Comment: M used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 8 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 10 in file main.s
+   Uses
+      At line 9 in file main.s
+Comment: Start used once
+a 00000000
+
+Symbol: a
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 14 in file main.s
+Comment: a used once
+increment 00000028
+
+Symbol: increment
+   Definitions
+      At line 29 in file main.s
+   Uses
+      At line 22 in file main.s
+      At line 26 in file main.s
+
+loop 0000000E
+
+Symbol: loop
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 20 in file main.s
+      At line 24 in file main.s
+      At line 27 in file main.s
+      At line 31 in file main.s
+
+stop 0000002E
+
+Symbol: stop
+   Definitions
+      At line 36 in file main.s
+   Uses
+      At line 18 in file main.s
+Comment: stop used once
+6 symbols
+342 symbols in table
