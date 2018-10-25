@@ -21,28 +21,31 @@ ARM Macro Assembler    Page 1
    13 00000000         Start
    14 00000000         
    15 00000000 05 02 9C 
-              64 9B 00 a       DCB              5, 2, -100, 100, -101, 0
+              64 9B FF a       DCB              5, 2, -100, 100, -101, 0xFFFFFF
+FF
    16 00000006 00      max     DCB              0
    17 00000007         
    18 00000007 00 F2AF 
               090C             ADR              r9, a
    19 0000000C F999 8000       LDRSB            r8, [r9]
-   20 00000010 E000            B                maximum
+   20 00000010 E004            B                maximum
    21 00000012         stop
-   22 00000012 E7FE            B                .
-   23 00000014         
-   24 00000014         maximum
-   25 00000014 F919 0B01       LDRSB            r0, [r9], #1
-   26 00000018 2800            CMP              r0, #0
-   27 0000001A D0FA            BEQ              stop
-   28 0000001C         
-   29 0000001C 4580            CMP              r8, r0
-   30 0000001E BF48 4680       MOVMI            r8, r0
-   31 00000022 E7F7            B                maximum
-   32 00000024         
-   33 00000024         
-   34 00000024                 ALIGN
-   35 00000024                 END
+   22 00000012 F2AF 000E       ADR              r0, max
+   23 00000016 F880 8000       STRB             r8, [r0]
+   24 0000001A E7FE            B                .
+   25 0000001C         
+   26 0000001C         maximum
+   27 0000001C F919 0B01       LDRSB            r0, [r9], #1
+   28 00000020 F1B0 3FFF       CMP              r0, #0xFFFFFFFF
+   29 00000024 D0F5            BEQ              stop
+   30 00000026         
+   31 00000026 4580            CMP              r8, r0
+   32 00000028 BF48 4680       MOVMI            r8, r0
+   33 0000002C E7F6            B                maximum
+   34 0000002E         
+   35 0000002E         
+   36 0000002E 00 00           ALIGN
+   37 00000030                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4 --apcs=interw
 ork --depend=.\main.d -o.\main.o -I.\RTE\_SimpleProject -IC:\Keil_v5\ARM\PACK\A
 RM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Dev
@@ -108,16 +111,16 @@ Symbol: max
    Definitions
       At line 16 in file main.s
    Uses
-      None
-Comment: max unused
-maximum 00000014
+      At line 22 in file main.s
+Comment: max used once
+maximum 0000001C
 
 Symbol: maximum
    Definitions
-      At line 24 in file main.s
+      At line 26 in file main.s
    Uses
       At line 20 in file main.s
-      At line 31 in file main.s
+      At line 33 in file main.s
 
 stop 00000012
 
@@ -125,7 +128,7 @@ Symbol: stop
    Definitions
       At line 21 in file main.s
    Uses
-      At line 27 in file main.s
+      At line 29 in file main.s
 Comment: stop used once
 6 symbols
 342 symbols in table

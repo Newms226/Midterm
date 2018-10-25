@@ -12,7 +12,7 @@ M      SPACE   4
 
 Start
 
-a		DCB		5, 2, -100, 100, -101, 0
+a		DCB		5, 2, -100, 100, -101, 0xFFFFFFFF
 max		DCB		0
 
 		ADR		r9, a
@@ -25,7 +25,7 @@ stop
 
 maximum
 		LDRSB	r0, [r9], #1
-		CMP		r0, #0
+		CMP		r0, #0xFFFFFFFF
 		BEQ		stop
 
 		CMP		r8, r0
