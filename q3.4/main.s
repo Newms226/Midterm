@@ -23,7 +23,7 @@ begin
 		ADR		r9, first
 		ADR		r10, second
 		
-add_LSW
+add_two_words
 		ADD		r0, r9, #4
 		LDR		r1, [r0]
 		ADD		r0, r10, #4
@@ -34,6 +34,7 @@ add_LSW
 		ADD		r7, r1, r2
 		ADDCSS	r7, r7, #1
 		B		.
+		
        ALIGN      
        END  
            
